@@ -15,6 +15,6 @@ class School
   end
 
   def grade(grade)
-    @students.has_key?(grade) ? @students[grade] : []
+    @students[grade] || []
   end
 end
