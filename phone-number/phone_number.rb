@@ -1,22 +1,31 @@
 class PhoneNumber
   def initialize(phone_number)
     @phone_number = phone_number.chars.select do |c|
-      /[\d]/.match(c)
+      !/[^\w]/.match(c)
     end.join
+    filter_phone_number
   end
 
   def number
-    return '0000000000' if @phone_number.size < 10
     @phone_number
+  end
+
+  def area_code
+    @phone_number[0..2]
+  end
+
+  def to_s
+    "(#{@phone_number[0..2]}) #{@phone_number[3..5]}-#{@phone_number[6..-1]}"
   end
 
   private
 
-  def under_ten
-    @phone_number.size < 10 && !first_of_eleven_is_one
+  def filter_phone_number
+    @phone_number = '0000000000' unless valid_content?
+    @phone_number = @phone_number.sub(/\A1/, '') if @phone_number.size == 11
   end
 
-  def first_of_eleven_is_one
-    @phone_number.size == 1 && @phone_number.chars.first.to_i == 1
+  def valid_content?
+    /\A1?[\d]{10}\Z/ =~ @phone_number
   end
 end
