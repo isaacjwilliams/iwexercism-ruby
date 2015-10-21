@@ -4,7 +4,7 @@ class Sieve
   end
 
   def primes
-    @range.to_a.delete_if { |n| !prime?(n) }
+    @range.select { |n| prime?(n) }
   end
 
   private
