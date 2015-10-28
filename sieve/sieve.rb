@@ -4,12 +4,13 @@ class Sieve
   end
 
   def primes
+    blacklist = []
     @primes = @range.to_a
     (2..Math.sqrt(@range.last)).each do |n|
       if n**2 < @range.last
-        @primes = @primes - (n**2..@range.last).select { |b| b % n == 0 }
+        blacklist << (n**2..@range.last).select { |b| b % n == 0 }
       end
     end
-    @primes
+    @primes - blacklist.flatten
   end
 end
