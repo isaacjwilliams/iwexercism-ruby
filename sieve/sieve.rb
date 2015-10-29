@@ -6,10 +6,8 @@ class Sieve
   def primes
     blacklist = []
     @primes = @range.to_a
-    (2..Math.sqrt(@range.last)).each do |n|
-      if n**2 < @range.last
-        blacklist << (n**2..@range.last).select { |b| b % n == 0 }
-      end
+    (2...Math.sqrt(@range.last)).each do |n|
+      blacklist << (n**2..@range.last).step(n).to_a if n**2 < @range.last
     end
     @primes - blacklist.flatten
   end
