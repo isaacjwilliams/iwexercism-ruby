@@ -1,13 +1,11 @@
 class ETL
   class << self
     def transform(old)
-      shiny = {}
-      old.each do |k, v|
+      old.each_with_object({}) do |(k, v), shiny|
         v.each do |l|
           shiny.merge!(l.downcase => k)
         end
       end
-      shiny
     end
   end
 end
